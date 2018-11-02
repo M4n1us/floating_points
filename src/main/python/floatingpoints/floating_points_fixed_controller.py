@@ -39,6 +39,11 @@ class FloatingPointController(QWidget):
 
         :param event: QPaintEvent, but we ignore the value and repaint the whole qwidget
         """
+
+        paint = QPainter()
+        paint.begin(self.ui.point_area)
+        self.draw_points(paint)
+        paint.end()
         pass
 
     def draw_points(self, qt_painter):
@@ -46,8 +51,12 @@ class FloatingPointController(QWidget):
         Drawing all the Points from the point_positions List in their colours and sizes
 
         :param qt_painter: Painter Object for Widget painting
-        :return: 
+        :return:
         """
+        widgetSize = self.ui.point_area.contentsRect()
+        qt_painter.setBrush(Qt.black)
+        rectangle = QRectF(QPointF(0.0, 0.0), widgetSize)
+        qt_painter.drawRect(rectangle)
         pass
 
     def closeEvent(self, event):
