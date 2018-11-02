@@ -1,4 +1,4 @@
-import sys, multiprocessing, random, time
+import sys, time
 
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
@@ -22,6 +22,7 @@ class FloatingPointController(QWidget):
         self.ui.button_new_point.clicked.connect(self.new_point)
         self.ui.button_del_last_point.clicked.connect(self.remove_point)
         self.model = model.FloatingPointModel()
+        self.running = True
         pass
 
     def new_point(self):
@@ -68,16 +69,19 @@ class FloatingPointController(QWidget):
         :return:
         """
         self.model.close()
+        self.ui.exec_()
+        self.exec_()
         pass
 
     def refresh_loop(self):
         """
         Refreshing the GUI every .025 seconds and processing any QApplication Events
         """
-        while True:
-            time.sleep(0.025)
+
+        while self.running:
             self.update()
             QApplication.processEvents()
+            time.sleep(0.025)
         pass
 
 
