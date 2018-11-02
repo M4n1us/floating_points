@@ -3,7 +3,7 @@ import sys, multiprocessing, random, time
 from PyQt5 import uic
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
-from src.main.python.floatingpoints import floating_points_fixed_view
+from src.main.python.floatingpoints import floating_points_fixed_view, floating_points_fixed_model
 
 
 class FloatingPointController(QWidget):
@@ -17,7 +17,9 @@ class FloatingPointController(QWidget):
 
     def __init__(self):
         super().__init__()
-        uic.loadUi('floatingPoints.ui', self)
+        #uic.loadUi('../ui/my_floating_points.ui', self)
+        self.ui = floating_points_fixed_view.Ui_Form()
+        self.ui.setupUi(self)
         pass
 
     def new_point(self):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/my_floating_points.ui'
+# Form implementation generated from reading ui file 'ui/my_floating_points_resizable.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -12,8 +12,8 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(480, 480)
-        Form.setMinimumSize(QtCore.QSize(480, 480))
-        Form.setMaximumSize(QtCore.QSize(480, 480))
+        Form.setMinimumSize(QtCore.QSize(0, 0))
+        Form.setMaximumSize(QtCore.QSize(65536, 65536))
         Form.setAutoFillBackground(False)
         self.button_new_point = QtWidgets.QPushButton(Form)
         self.button_new_point.setGeometry(QtCore.QRect(10, 450, 221, 23))
