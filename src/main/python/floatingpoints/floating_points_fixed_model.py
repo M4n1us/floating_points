@@ -1,6 +1,5 @@
-from src.main.python.floatingpoints.floating_points_fixed_controller import living_point
 import random
-from multiprocessing import Process, Value, Array
+from multiprocessing import Array
 class FloatingPointModel():
     def __init__(self, width, height):
         self.points = []
