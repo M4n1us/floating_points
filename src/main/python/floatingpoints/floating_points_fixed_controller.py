@@ -2,7 +2,7 @@ import sys, multiprocessing, random, time
 
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
-from floatingpoints import floating_points_fixed_view
+from src.main.python.floatingpoints import floating_points_fixed_view
 
 
 class FloatingPointController(QWidget):
