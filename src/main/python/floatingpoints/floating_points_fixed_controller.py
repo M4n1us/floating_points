@@ -1,5 +1,6 @@
 import sys, multiprocessing, random, time
 
+from PyQt5 import uic
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
 from src.main.python.floatingpoints import floating_points_fixed_view
@@ -16,6 +17,7 @@ class FloatingPointController(QWidget):
 
     def __init__(self):
         super().__init__()
+        uic.loadUi('floatingPoints.ui', self)
         pass
 
     def new_point(self):
@@ -95,4 +97,4 @@ if __name__ == "__main__":
     c = FloatingPointController()
     c.show()
     c.refresh_loop()
-    sys.exit()
+    sys.exit(app.exec_())

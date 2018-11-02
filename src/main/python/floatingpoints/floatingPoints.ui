@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MyFloatingPoints</class>
- <widget class="QMainWindow" name="MyFloatingPoints">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>387</height>
+    <width>480</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>My Floating Points</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="point_container" native="true">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>421</width>
-      <height>321</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="new_point">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>340</y>
-      <width>201</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New Point</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="del_last_point">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>340</y>
-      <width>201</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Remove Last Point</string>
-    </property>
-   </widget>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QPushButton" name="button_new_point">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>450</y>
+     <width>221</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>New Point</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_del_last_point">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>450</y>
+     <width>221</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>Remove Last Point</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="point_area" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>461</width>
+     <height>431</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>
