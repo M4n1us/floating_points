@@ -1,9 +1,8 @@
 import sys, multiprocessing, random, time
 
-from PyQt5 import uic
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
-from src.main.python.floatingpoints import floating_points_fixed_view, floating_points_fixed_model
+from src.main.python.floatingpoints import floating_points_fixed_view as view, floating_points_fixed_model as model
 
 
 class FloatingPointController(QWidget):
@@ -18,20 +17,27 @@ class FloatingPointController(QWidget):
     def __init__(self):
         super().__init__()
         #uic.loadUi('../ui/my_floating_points.ui', self)
-        self.ui = floating_points_fixed_view.Ui_Form()
+        self.ui = view.Ui_Form()
         self.ui.setupUi(self)
+        self.ui.button_new_point.clicked.connect(self.new_point)
+        self.ui.button_del_last_point.clicked.connect(self.remove_point)
+        self.model = model.FloatingPointModel()
         pass
 
     def new_point(self):
         """
         Add a new point
         """
+        print("new_point")
+        self.model.addPoint()
         pass
 
     def remove_point(self):
         """
         Remove the last initiated point
         """
+        print("del_last_point")
+        self.model.removePoint()
         pass
 
     def paintEvent(self, event):
@@ -40,10 +46,6 @@ class FloatingPointController(QWidget):
         :param event: QPaintEvent, but we ignore the value and repaint the whole qwidget
         """
 
-        paint = QPainter()
-        paint.begin(self.ui.point_area)
-        self.draw_points(paint)
-        paint.end()
         pass
 
     def draw_points(self, qt_painter):
@@ -53,10 +55,6 @@ class FloatingPointController(QWidget):
         :param qt_painter: Painter Object for Widget painting
         :return:
         """
-        widgetSize = self.ui.point_area.contentsRect()
-        qt_painter.setBrush(Qt.black)
-        rectangle = QRectF(QPointF(0.0, 0.0), widgetSize)
-        qt_painter.drawRect(rectangle)
         pass
 
     def closeEvent(self, event):
@@ -69,12 +67,17 @@ class FloatingPointController(QWidget):
         :param event: Event object which contains the event parameters
         :return:
         """
+        self.model.close()
         pass
 
     def refresh_loop(self):
         """
         Refreshing the GUI every .025 seconds and processing any QApplication Events
         """
+        while True:
+            time.sleep(0.025)
+            self.update()
+            QApplication.processEvents()
         pass
 
 

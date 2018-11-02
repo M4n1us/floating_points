@@ -7,3 +7,5 @@ class FloatingPointModel():
 
     def removePoint(self):
         pass
+
+    def point(self, lock, num):
