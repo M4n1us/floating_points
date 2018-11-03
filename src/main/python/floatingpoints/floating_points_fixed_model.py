@@ -1,5 +1,6 @@
 import random
-from multiprocessing import Array
+from multiprocessing import Array, Condition
+from PyQt5.QtCore import Qt
 import src.main.python.floatingpoints.floating_points_fixed_worker as worker
 import src.main.python.floatingpoints.floating_points_model_helper as helper
 class FloatingPointModel():
@@ -17,6 +18,8 @@ class FloatingPointModel():
         self.height = height
         self.max_speed = 15
         self.controller = controller
+        self.color = {'0': Qt.black, '1': Qt.red, '2': Qt.green, '3': Qt.blue}
+        self.condition = Condition()
 
     def addPoint(self, color, radius):
         """
@@ -25,7 +28,7 @@ class FloatingPointModel():
         :param radius: radius of point, value 3 <= x <= 50
         :return: None
         """
-        new_point = Array('i', 5)
+        new_point = Array('i', 5, lock=False)
         new_point[0] = random.randint(0, self.width)
         new_point[1] = random.randint(0, self.height)
         new_point[2] = 1
@@ -52,5 +55,7 @@ class FloatingPointModel():
         Called when all worker processes should be shut down
         :return: None
         """
-        for el in self.points:
-            self.removePoint()
+        with self.condition as cond:
+            for el in self.points:
+                self.removePoint()
+            cond.notify()

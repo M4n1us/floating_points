@@ -21,9 +21,11 @@ class FloatingPointController(QWidget):
         self.ui.setupUi(self)
         self.ui.button_new_point.clicked.connect(self.new_point)
         self.ui.button_del_last_point.clicked.connect(self.remove_point)
-        draw_area = self.ui.point_area.contentsRect()
-        width = draw_area.width()
-        height = draw_area.height()
+        self.draw_area = self.ui.point_area.contentsRect()
+        self.ui.point_area.show()
+        self.setUpdatesEnabled(True)
+        width = self.draw_area.width()
+        height = self.draw_area.height()
         self.model = model.FloatingPointModel(self, width, height)
         self.running = True
         self.app = application
@@ -34,7 +36,7 @@ class FloatingPointController(QWidget):
         Add a new point
         """
         print("new_point")
-        self.model.addPoint(2, 1)
+        self.model.addPoint(0, 10)
         pass
 
     def remove_point(self):
@@ -51,6 +53,11 @@ class FloatingPointController(QWidget):
         :param event: QPaintEvent, but we ignore the value and repaint the whole qwidget
         """
 
+        qp = QPainter()
+        qp.begin(self)
+        self.draw_points(qp)
+        qp.end()
+
         pass
 
     def draw_points(self, qt_painter):
@@ -60,6 +67,14 @@ class FloatingPointController(QWidget):
         :param qt_painter: Painter Object for Widget painting
         :return:
         """
+        for point in self.model.points:
+            x = point[0][0] + self.draw_area.topLeft().x()
+            y = point[0][1] + self.draw_area.topLeft().y()
+            color_id = point[0][3]
+            radius = point[0][4]
+            color = self.model.color[str(color_id)]
+            qt_painter.setBrush(color)
+            qt_painter.drawEllipse(QPoint(x, y), radius, radius)
         pass
 
     def closeEvent(self, event):
@@ -72,16 +87,20 @@ class FloatingPointController(QWidget):
         :param event: Event object which contains the event parameters
         :return:
         """
-        self.model.close()
-        self.running = False
-        self.app.exit()
+        with self.model.condition as cond:
+            self.model.close()
+            cond.wait()
+            self.running = False
+            self.app.exit()
+            sys.exit()
 
     def refresh_loop(self):
         """
         Refreshing the GUI every .025 seconds and processing any QApplication Events
         """
-        self.app.exec()
         while self.running:
+            #self.update()
+            #QWidget.update()
             self.update()
             QApplication.processEvents()
             time.sleep(0.025)
@@ -105,7 +124,7 @@ def living_point(point_position, vx, vy, window_width, window_height):
 
     """
     while point_position[2]:
-        print(str(point_position[0]) + " " + str(point_position[1]))
+        #print(str(point_position[0]) + " " + str(point_position[1]))
         dx = int((point_position[0] + vx) / window_width)
         dy = int((point_position[1] + vy) / window_height)
         dx2 = point_position[0] + vx < 0
@@ -129,4 +148,4 @@ if __name__ == "__main__":
     c = FloatingPointController(app)
     c.show()
     c.refresh_loop()
-    sys.exit()
+    sys.exit(app.exec())
