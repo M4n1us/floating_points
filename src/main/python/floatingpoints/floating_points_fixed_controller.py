@@ -14,15 +14,19 @@ class FloatingPointController(QWidget):
     :ivar main_form: Qt Form
     """
 
-    def __init__(self):
+    def __init__(self, application):
         super().__init__()
         #uic.loadUi('../ui/my_floating_points.ui', self)
         self.ui = view.Ui_Form()
         self.ui.setupUi(self)
         self.ui.button_new_point.clicked.connect(self.new_point)
         self.ui.button_del_last_point.clicked.connect(self.remove_point)
-        self.model = model.FloatingPointModel()
+        draw_area = self.ui.point_area.contentsRect()
+        width = draw_area.width()
+        height = draw_area.height()
+        self.model = model.FloatingPointModel(self, width, height)
         self.running = True
+        self.app = application
         pass
 
     def new_point(self):
@@ -30,7 +34,7 @@ class FloatingPointController(QWidget):
         Add a new point
         """
         print("new_point")
-        self.model.addPoint()
+        self.model.addPoint(2, 1)
         pass
 
     def remove_point(self):
@@ -69,20 +73,24 @@ class FloatingPointController(QWidget):
         :return:
         """
         self.model.close()
-        self.ui.exec_()
-        self.exec_()
-        pass
+        self.running = False
+        self.app.exit()
 
     def refresh_loop(self):
         """
         Refreshing the GUI every .025 seconds and processing any QApplication Events
         """
-
+        self.app.exec()
         while self.running:
             self.update()
             QApplication.processEvents()
             time.sleep(0.025)
-        pass
+
+    def get_view(self):
+        return self.ui
+
+    def get_model(self):
+        return self.model
 
 
 def living_point(point_position, vx, vy, window_width, window_height):
@@ -97,6 +105,7 @@ def living_point(point_position, vx, vy, window_width, window_height):
 
     """
     while point_position[2]:
+        print(str(point_position[0]) + " " + str(point_position[1]))
         dx = int((point_position[0] + vx) / window_width)
         dy = int((point_position[1] + vy) / window_height)
         dx2 = point_position[0] + vx < 0
@@ -111,8 +120,13 @@ def living_point(point_position, vx, vy, window_width, window_height):
 
 
 if __name__ == "__main__":
+    """
+    Changed from specifications because the way it was implemented doesn't work when exiting the program as it enters
+    an infinite loop while the even loop has already been exited.
+    Positioned start of app into refresh_loop where events are processed.
+    """
     app = QApplication(sys.argv)
-    c = FloatingPointController()
+    c = FloatingPointController(app)
     c.show()
     c.refresh_loop()
-    sys.exit(app.exec_())
+    sys.exit()

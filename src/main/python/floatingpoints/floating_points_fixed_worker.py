@@ -28,5 +28,6 @@ class WorkerProcess(Process):
         """
         vx = random.randint(1, self.max_speed)
         vy = random.randint(1, self.max_speed)
+        print("Working")
 
         living_point(self.point_info, vx, vy, self.width, self.height)
