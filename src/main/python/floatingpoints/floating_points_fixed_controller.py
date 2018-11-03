@@ -36,7 +36,16 @@ class FloatingPointController(QWidget):
         Add a new point
         """
         print("new_point")
-        self.model.addPoint(0, 10)
+        if self.ui.rb_black.isChecked():
+            color = 0
+        elif self.ui.rb_red.isChecked():
+            color = 1
+        elif self.ui.rb_green.isChecked():
+            color = 2
+        elif self.ui.rb_blue.isChecked():
+            color = 3
+        radius = self.ui.sl_radius.value()
+        self.model.addPoint(color, radius)
         pass
 
     def remove_point(self):
