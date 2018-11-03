@@ -1,4 +1,4 @@
-from src.main.python.floatingpoints.floating_points_fixed_controller import living_point
+from floatingpoints.floating_points_fixed_controller import living_point
 from multiprocessing import Process
 import random
 

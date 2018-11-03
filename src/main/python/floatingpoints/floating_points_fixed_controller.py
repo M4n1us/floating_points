@@ -2,7 +2,7 @@ import sys, time
 
 from PyQt5.Qt import *
 from PyQt5.QtWidgets import *
-from src.main.python.floatingpoints import floating_points_fixed_view as view, floating_points_fixed_model as model
+from floatingpoints import floating_points_fixed_view as view, floating_points_fixed_model as model
 
 
 class FloatingPointController(QWidget):

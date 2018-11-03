@@ -1,8 +1,8 @@
 import random
 from multiprocessing import Array, Condition
 from PyQt5.QtCore import Qt
-import src.main.python.floatingpoints.floating_points_fixed_worker as worker
-import src.main.python.floatingpoints.floating_points_model_helper as helper
+import floatingpoints.floating_points_fixed_worker as worker
+import floatingpoints.floating_points_model_helper as helper
 class FloatingPointModel():
     """
     Model package which implements the floating_point logic
